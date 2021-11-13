@@ -1,0 +1,62 @@
+default class annotation 
+  @Comparable
+  @Convert(fromJson: true, toJson: true);
+
+default enum annotation @Convert(fromJson: true, toJson: true);
+
+default union annotation 
+  @Comparable
+  @Convert(fromJson: true, toJson: true);
+
+
+enum Enum {
+  @JsonAlias(alias: '1')
+  first;
+
+  @JsonAlias(alias: '2')
+  second;
+
+  @JsonAlias(alias: '3')
+  third;
+}
+
+class Basic {
+  Bool? b;
+  Int64? i64;
+  Uint64? u64;
+  Float? f;
+  Double? d;
+  String? s;
+  Bytes? bytes;
+
+  @JsonAlias(alias: 'e')
+  Enum? enumValue;
+
+  @JsonAlias(alias: 'l')
+  List<String>? list;
+
+  @JsonAlias(alias: 't')
+  Set<String>? set;
+
+  @JsonAlias(alias: 'm')
+  Map<String, Int64>? map;
+}
+
+union Union {
+  @JsonAlias(alias: 'b')
+  Bool boolValue;
+
+  @JsonAlias(alias: 's')
+  String stringValue;
+}
+
+class NonStringMap {
+  Map<Int32, Int32> a;
+}
+
+@Convert(fromString: true, toString: true)
+@Immutable
+union UnionWithOptionals {
+  0: Int64? a;
+  1: String? b;
+}

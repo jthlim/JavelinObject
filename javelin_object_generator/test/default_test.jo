@@ -1,0 +1,36 @@
+@Convert(fromString: true, fromId: true)
+enum Enum {
+  small;
+  medium;
+  large;
+}
+
+@Immutable
+@Convert(
+  fromJson: true, toJson: true,
+  fromYaml: true,
+  fromMap: true, toMap: true,
+  fromString: true, toString: true,
+  fromBinary: true, toBinary: true,
+)
+class Person {
+  0: String name;
+}
+
+@Convert(
+  fromJson: true, toJson: true,
+  fromYaml: true,
+  fromMap: true, toMap: true,
+  fromBinary: true, toBinary: true,
+  fromString: true, toString: true,
+)
+class DefaultValues {
+  0: Int32 nonNullInt32 = 1;
+  1: Int32? nullableInt32 = 2;
+  2: String nonNullString = 'abc';
+  3: String? nullableString = 'xyz';
+  4: Enum nonNullEnum = .medium;
+  5: Enum? nullableEnum = .large;
+  6: Person nonNullPerson = Person(name: 'Alex');
+  7: Person? nullablePerson = Person(name: 'Bob');
+}

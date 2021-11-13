@@ -1,0 +1,12 @@
+
+class 
+
+class TableDescriptor {
+  String database;
+  String tableName;
+  List<Column> columns;
+}
+
+class Column {
+  
+}

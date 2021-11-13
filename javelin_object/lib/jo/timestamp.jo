@@ -1,0 +1,13 @@
+@Convert(
+  fromBinary: true, toBinary: true,
+  fromText: true, toText: true,
+  fromJson: true, toJson: true,
+  fromObject: true, toObject: true,
+)
+inline union Timestamp {
+  /// The number of microseconds since 1970-01-01T00:00:00.
+  0: Int64 microsecondsSinceEpoch;
+
+  /// A date-time formatted string, such as "2021-12-25T12:34:45"
+  1: String dateTimeString;
+}

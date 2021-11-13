@@ -1,0 +1,49 @@
+import 'token.jo';
+import 'void.jo';
+
+default class annotations
+  @Convert(
+    fromMap: true, 
+    fromString: true, toString: true, 
+    fromBinary: true, toBinary: true,
+  )
+  @Immutable;
+
+class MapType {
+  0: DataType keyType;
+  1: DataType valueType;
+}
+
+extendable class ObjectType {
+  1: Token token;
+  2: String objectName;
+}
+
+class ClassType extends ObjectType {}
+
+@ActiveElement(className: 'DataTypeKind', fieldName: 'kind')
+@Convert(
+  fromMap: true, 
+  fromString: true, toString: true, 
+  fromBinary: true, toBinary: true,
+)
+@Immutable
+@When
+union DataType {
+  0: DataType optionalType;
+  1: Void boolType;
+  2: Void int8Type;
+  3: Void int32Type;
+  4: Void int64Type;
+  5: Void uint8Type;
+  6: Void uint32Type;
+  7: Void uint64Type;
+  8: Void floatType;
+  9: Void doubleType;
+  10: Void stringType;
+  11: Void bytesType;
+  12: DataType listType;
+  13: DataType setType;
+  14: MapType mapType;
+  15: ObjectType objectType;
+}

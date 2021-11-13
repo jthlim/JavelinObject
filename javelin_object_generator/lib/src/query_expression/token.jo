@@ -1,0 +1,39 @@
+import '../void.jo';
+
+@ActiveElement(className: 'TokenType', fieldName: 'type')
+@Comparable
+@Convert(toString: true)
+@Immutable
+union TokenData {
+  Bool boolValue;
+  Int32 intValue;
+  Double doubleValue;
+  String stringValue;
+  String identifier;
+  String parameter;
+  Void dot;
+  Void minus;
+  Void equals;
+  Void notEquals;
+  Void lessThan;
+  Void lessThanOrEquals;
+  Void greaterThan;
+  Void greaterThanOrEquals;
+  Void leftSquareBracket;
+  Void rightSquareBracket;
+  Void leftParenthesis;
+  Void rightParenthesis;
+  Void logicalAnd;
+  Void logicalOr;
+  Void eof;
+}
+
+@Comparable
+@Convert(toString: true)
+@Immutable
+class Token {
+  @Embed
+  0: TokenData data;
+
+  1: Uint32 offset;
+}

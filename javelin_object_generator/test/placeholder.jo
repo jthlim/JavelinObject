@@ -1,0 +1,10 @@
+@Placeholder
+class TestClass {
+  0: Int32 value;
+}
+
+@Placeholder
+union TestUnion {
+  0: Int32 value;
+  1: String string;
+}

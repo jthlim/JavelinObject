@@ -1,0 +1,32 @@
+default class annotations
+  @Comparable
+  @Convert(
+    fromMap: true, toMap: true, 
+    fromJson: true, toJson: true, 
+    fromString: true, toString: true,
+    fromBinary: true, toBinary: true,
+  )
+  @Immutable;
+
+
+@Convert(typeId: 0)
+virtual class BaseClass {
+  2: Int32 i;
+  3: String? s;
+  4: Uint32 u = 10;
+  5: Double? d = 20.0;
+}
+
+@Convert(
+  derivedFieldId: 2, typeId: 1,
+  jsonTypeName: 'D',
+)
+virtual class Derived extends BaseClass {
+  0: Bool b;
+  1: Float f;
+}
+
+@Convert(typeId: 2)
+class Derived2 extends Derived {
+  0: String d2String;
+}

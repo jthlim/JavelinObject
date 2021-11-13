@@ -1,0 +1,32 @@
+default class annotations 
+  @Convert(
+    fromBinary: true, toBinary: true,
+    fromText: true, toText: true,
+  )
+  @Immutable;
+
+class JoTableDescriptor {
+  String databaseName;
+  String tableName;
+  List<JoColumnDescriptor> columns;
+
+  /// List of auxiliary tables.
+  ///
+  /// Auxiliary tables are used to store lists, sets and maps.
+  List<JoTableDescriptor> auxiliaryTables;
+}
+
+class JoColumnDescriptor {
+  Int64 id;
+  String columnName;
+  String type;
+  Bool isPrimary;
+  Bool isSequence;
+  Bool isUnique;
+}
+
+class JoIndexDescriptor {
+  String indexName;
+  Bool unique;
+  List<String> columnNames;
+}

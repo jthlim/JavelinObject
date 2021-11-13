@@ -1,0 +1,7 @@
+builders:
+  joBuilder:
+    import: 'package:javelin_object_generator/builder/generator.dart'
+    builder_factories: ['joBuilder']
+    auto_apply: dependents
+    build_extensions: {".jo": [".jo.tokens", ".jo.parse", ".jo.dart"]}
+    build_to: source

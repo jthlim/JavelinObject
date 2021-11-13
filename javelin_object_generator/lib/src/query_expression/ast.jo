@@ -1,0 +1,119 @@
+import '../void.jo';
+
+default class annotations 
+  @Comparable
+  @Convert(toString: true)
+  @Immutable;
+
+class ColumnReferenceAstNode {
+  0: String columnName;
+  1: ValueType valueType;
+}
+
+class ComparisonAstNode {
+  AstNode first;
+  AstNode second;
+}
+
+class MethodCallAstNode {
+  AstNode receiver;
+  String methodName;
+  List<MethodCallParameter> fixedParameters;
+  Map<String, MethodCallParameter> optionalParameters;
+}
+
+class MethodCallParameter {
+  String name;
+  ValueType valueType;
+}
+
+class ParameterAstNode {
+  String name;
+  ValueType valueType;
+}
+
+@ActiveElement(className: 'AstNodeType', fieldName: 'type')
+@Convert(toString: true)
+union AstNode {
+  AstNode negate;
+  List<AstNode> logicalAnd;
+  List<AstNode> logicalOr;
+  Value constant;
+  ColumnReferenceAstNode columnReference;
+  MethodCallAstNode methodCall;
+  ParameterAstNode parameter;
+  ComparisonAstNode equals;
+  ComparisonAstNode notEquals;
+  ComparisonAstNode lessThan;
+  ComparisonAstNode lessThanOrEquals;
+}
+
+class ClassType {
+  String className;
+}
+
+class EnumType {
+  String enumName;
+}
+
+class MethodType {
+  ValueType returnType;
+  List<MethodCallParameter> fixedParameters;
+  Map<String, MethodCallParameter> optionalParameters;
+}
+
+class UnionType {
+  String unionName;
+}
+
+@ActiveElement(className: 'ValueTypeKind', fieldName: 'kind')
+@Comparable
+@Convert(toString: true)
+union ValueType {
+  ValueType optionalType;
+  Void boolType;
+  Void intType;
+  Void doubleType;
+  Void stringType;
+  ClassType classType;
+  EnumType enumType;
+  UnionType unionType;
+  MethodType methodType;
+}
+
+class ClassValue {
+  0: ClassType classType;
+  1: Map<String, Value> parameters;
+}
+
+class EnumValue {
+  0: EnumType enumType;
+  1: String enumValueName;
+}
+
+class MethodValue {
+  MethodType methodType;  
+}
+
+class UnionValue {
+  0: UnionType unionType;
+  1: String activeElementName;
+  2: Value? value;
+}
+
+@ActiveElement(className: 'ValueKind', fieldName: 'kind')
+@Comparable
+@Convert(toString: true)
+union Value {
+  0: Void nullValue;
+  1: Bool boolValue;
+  2: Int64 intValue;
+  3: Double doubleValue;
+  4: String stringValue;
+  5: List<Value> listValue;
+  6: MethodValue methodValue;
+  7: ClassValue classValue;
+  8: EnumValue enumValue;
+  9: UnionValue unionValue;
+}
+

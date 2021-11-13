@@ -1,0 +1,28 @@
+
+default class annotations 
+  @Convert(toString: true)
+  @Comparable
+  @MergeWith
+  @Immutable;
+
+class SimpleMerge {
+  String a;
+  String? b;
+}
+
+class Inner {
+  String x;
+  String? y;
+}
+
+class Outer {
+  Inner a;
+
+  @MergeWith
+  Inner b;
+
+  Inner? c;
+
+  @MergeWith
+  Inner? d;
+}

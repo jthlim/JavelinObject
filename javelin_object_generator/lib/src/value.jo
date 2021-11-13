@@ -1,0 +1,49 @@
+import 'data_type.jo';
+import 'void.jo';
+
+default class annotations 
+  @Convert(
+    fromMap: true, 
+    fromString: true, toString: true, 
+    fromBinary: true, toBinary: true,
+  )
+  @Immutable;
+
+class ClassObjectValue {
+  0: ObjectType objectType;
+  1: Map<String, Value> parameters;
+}
+
+class EnumObjectValue {
+  0: ObjectType objectType;
+  1: String valueName;
+}
+
+class UnionObjectValue {
+  0: ObjectType objectType;
+  1: String activeElementName;
+  2: Value? value;
+}
+
+@ActiveElement(className: 'ValueType', fieldName: 'type')
+@Convert(
+  fromMap: true, 
+  fromString: true, toString: true, 
+  fromBinary: true, toBinary: true,
+)
+@Immutable
+@When
+union Value {
+  0: Value newValue;
+  1: Void nullValue;
+  2: Bool boolValue;
+  3: Int64 intValue;
+  4: Double doubleValue;
+  5: String stringValue;
+  6: List<Value> listValue;
+  7: Set<Value> setValue;
+  8: Map<Value, Value> mapValue;
+  9: ClassObjectValue classValue;
+  10: EnumObjectValue enumValue;
+  11: UnionObjectValue unionValue;
+}

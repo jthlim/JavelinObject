@@ -1,0 +1,56 @@
+default class annotations @Comparable @Convert(toDartString: true) @Immutable;
+default enum annotations @Convert(toDartString: true);
+default union annotations @Comparable @Convert(toDartString: true) @Immutable;
+
+enum EnumValue {
+  a;
+  b;
+  c;
+  d;
+  e;
+}
+
+class Optionals {
+  Bool? b;
+  Int32? i;
+  Uint32? u;
+  Float? f;
+  Double? d;
+  String? string;
+  EnumValue? e;
+  List<Int32>? intList;
+  Set<Int32>? intSet;
+  Map<String, Person>? personMap; 
+}
+
+class Person {
+  String name;
+  Uint32 age;
+}
+
+union Union {
+  Bool b;
+  Int32 i;
+  Uint32 u;
+  Float f;
+  Double d;
+  String string;
+  EnumValue e;
+  Union un;
+}
+
+virtual class BaseClass {
+  Int32 i;
+  String? s;
+  Uint32 u = 10;
+  Double? d = 20.0;
+}
+
+class InheritedClass extends BaseClass {
+  Bool? b;
+  Float f;
+}
+
+class Nested {
+  Person p;
+}

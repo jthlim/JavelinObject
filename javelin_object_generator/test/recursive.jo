@@ -1,0 +1,6 @@
+@Comparable
+@Convert(fromBinary: true, toBinary: true, toString: true, toJson: true)
+class Node {
+  0: Int32 value;
+  1: Node? next;
+}

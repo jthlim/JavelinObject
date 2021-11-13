@@ -1,0 +1,346 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Javelin Object Specification File",
+	"patterns": [
+		{
+			"include": "#comments"
+		},
+		{
+			"include": "#default-statement"
+		},
+		{
+			"include": "#annotation"
+		},
+		{
+			"include": "#declaration"
+		},
+		{
+			"include": "#ids"
+		},
+		{
+			"include": "#constants"
+		},
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#parameters"
+		}
+	],
+	"foldingStartMarker": "\\{\\s*$",
+	"foldingStopMarker": "^\\s*\\}",
+	"repository": {
+		"annotation": {
+			"patterns": [
+				{
+					"name": "markup.italic",
+					"begin": "@\\w+\\(",
+					"end": "\\)",
+					"patterns": [
+						{
+							"begin": "(\\w+)",
+							"end": ",|(?=\\))",
+							"beginCaptures": {
+								"0": {
+									"name": "variable.parameter"
+								}
+							},
+							"patterns": [
+								{
+									"include": "#constants"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "markup.italic",
+					"match": "@\\w+"
+				}
+			]
+		},
+		"character-escapes": {
+			"patterns": [
+				{
+					"name": "constant.character.escape.jo",
+					"match": "\\\\x[0-9A-Fa-f]{2}"
+				},
+				{
+					"name": "constant.character.escape.jo",
+					"match": "\\\\u[0-9A-Fa-f]{4}"
+				},
+				{
+					"name": "constant.character.escape.jo",
+					"match": "\\\\(u|x)\\{[0-9A-Fa-f]+\\}"
+				},
+				{
+					"name": "invalid.illegal",
+					"match": "\\\\(u|x)"
+				},
+				{
+					"name": "constant.character.escape.jo",
+					"match": "\\\\."
+				}
+			]
+		},
+		"comments": {
+			"patterns": [
+				{
+					"name": "comment.block.documentation.jo",
+					"begin": "///",
+					"end": "\\n"
+				},
+				{
+					"name": "comment.line.double-slash.jo",
+					"begin": "//",
+					"end": "\\n"
+				},
+				{
+					"name": "comment.block.jo",
+					"begin": "/\\*",
+					"end": "\\*/"
+				}
+			]
+		},
+		"constants": {
+			"patterns": [
+				{
+					"name": "invalid.illegal",
+					"match": "\\b(class|default|enum|extends|union)\\b"
+				},
+				{
+					"name": "constant.numeric.jo",
+					"match": "\\b\\d+(\\.\\d+)?"
+				},
+				{
+					"name": "constant.language.jo",
+					"match": "\\b(true|false)\\b"
+				},
+				{
+					"include": "#strings"
+				}
+			]
+		},
+		"class-declaration": {
+			"patterns": [
+				{
+					"begin": "\\b(class)\\b\\s*",
+					"end": "(?=\\{)",
+					"beginCaptures": {
+						"1": {
+							"name": "keyword.other.jo"
+						}
+					},
+					"patterns": [
+						{
+							"begin": "([A-Z]\\w*)\\b\\s*",
+							"end": "(?=\\{)",
+							"beginCaptures": {
+								"1": {
+									"name": "entity.name.class.jo"
+								}
+							},
+							"patterns": [
+								{
+									"include": "#extends-clause"
+								}
+							]
+						},
+						{
+							"name": "invalid.illegal",
+							"match": "\\w+"
+						},
+						{
+							"match": "\\s*"
+						}
+					]
+				}
+			]
+		},
+		"declaration": {
+			"patterns": [
+				{
+					"include": "#class-declaration"
+				},
+				{
+					"include": "#enum-declaration"
+				},
+				{
+					"include": "#union-declaration"
+				}
+			]
+		},
+		"default-statement": {
+			"name": "meta.preprocessor.jo",
+			"begin": "\\bdefault\\b",
+			"end": ";",
+			"patterns": [
+				{
+					"name": "keyword.other.jo",
+					"match": "\\b(annotations?|class|default|enum|field|union|value)\\b"
+				},
+				{
+					"include": "#annotation"
+				}
+			]
+		},
+		"enum-declaration": {
+			"begin": "\\b(enum)\\b\\s*",
+			"end": "(?=\\{)",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.other.jo"
+				}
+			},
+			"patterns": [
+				{
+					"name": "entity.name.class.jo",
+					"match": "[A-Z]\\w*"
+				},
+				{
+					"name": "invalid.illegal",
+					"match": "\\w+"
+				}
+			]
+		},
+		"extends-clause": {
+			"patterns": [
+				{
+					"begin": "\\b(extends)\\b\\s*",
+					"end": "(?=\\{)",
+					"beginCaptures": {
+						"1": {
+							"name": "keyword.other.jo"
+						}
+					},
+					"patterns": [
+						{
+							"name": "entity.other.inherited-class.jo",
+							"match": "[A-Z]\\w*"
+						},
+						{
+							"name": "invalid.illegal",
+							"match": "\\w+"
+						}
+					]
+				}
+			]
+		},
+		"ids": {
+			"patterns": [
+				{
+					"name": "keyword.control",
+					"match": "\\b\\d+(?=\\s*:)"
+				}
+			]
+		},
+		"keywords": {
+			"patterns": [
+				{
+					"name": "meta.preprocessor.jo",
+					"match": "\\bimport\\b"
+				},
+				{
+					"name": "keyword.operator.new.jo",
+					"match": "\\bnew\\b"
+				},
+				{
+					"name": "keyword.operator.jo",
+					"match": "[:;=<>]"
+				},
+				{
+					"name": "storage.modifier",
+					"match": "[?]"
+				},
+				{
+					"name": "storage.type.jo",
+					"match": "\\b(Bool|Int8|Int32|Int64|Uint8|Uint32|Uint64|Float|Double|String|Bytes|List|Set|Map|[A-Z]\\w*)\\b"
+				},
+				{
+					"begin": "\\b(extendable|virtual)\\b",
+					"end": "(?=\\{)",
+					"beginCaptures": {
+						"1": {
+							"name": "storage.modifier.jo"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#class-declaration"
+						}
+					]
+				},
+				{
+					"begin": "\\b(inline)\\b\\s*",
+					"end": "(?=\\{)",
+					"beginCaptures": {
+						"1": {
+							"name": "storage.modifier.jo"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#union-declaration"
+						}
+					]
+				}
+			]
+		},
+		"parameters": {
+			"patterns": [
+				{
+					"name": "support.variable",
+					"match": "([a-z]\\w*)(?=\\s*:)"
+				}
+			]
+		},
+		"strings": {
+			"patterns": [
+				{
+					"name": "string.quoted.double.jo",
+					"begin": "\"",
+					"end": "\"",
+					"patterns": [
+						{
+							"include": "#character-escapes"
+						}
+					]
+				},
+				{
+					"name": "string.quoted.single.jo",
+					"begin": "'",
+					"end": "'",
+					"patterns": [
+						{
+							"include": "#character-escapes"
+						}
+					]
+				}
+			]
+		},
+		"union-declaration": {
+			"begin": "\\b(union)\\b\\s*",
+			"end": "(?=\\{)",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.other.jo"
+				}
+			},
+			"patterns": [
+				{
+					"match": "([A-Z]\\w*)\\s*",
+					"captures": {
+						"1": {
+							"name": "entity.name.class.jo"
+						}
+					}
+				},
+				{
+					"name": "invalid.illegal",
+					"match": "\\w+\\s*"
+				}
+			]
+		}
+	},
+	"scopeName": "source.jo"
+}

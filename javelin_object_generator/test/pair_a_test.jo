@@ -1,0 +1,5 @@
+import 'pair_b_test.jo';
+
+class PairA {
+  PairB pairB;
+}

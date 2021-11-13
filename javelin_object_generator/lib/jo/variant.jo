@@ -1,0 +1,11 @@
+@Convert(fromObject: true, toObject: true)
+inline union Variant {
+  Bool b;
+  Int64 i;
+  Double d;
+  String s;
+
+  Set<Variant> variantSet;
+  List<Variant> variantList;
+  Map<Variant, Variant> variantMap;
+}

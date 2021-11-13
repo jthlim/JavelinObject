@@ -1,0 +1,35 @@
+@Convert(
+  fromString: true, toString: true, 
+  fromJson: true, toJson: true, 
+  fromYaml: true,
+)
+class User {
+  @Column(sequence: true, primaryKey: true)
+  Int64? id;
+
+  String name;
+  Company? company;
+  PhoneNumber primaryContactNumber;
+  PhoneNumber? cellPhoneNumber;
+
+  Map<String, Int32> map;
+  Map<String, Int32>? optionalMap;
+  Set<String> nonOptionalSet;
+  Set<String>? optionalSet;
+  List<String> list;
+  List<String>? optionalList;
+}
+
+@Convert(fromString: true, toString: true, fromJson: true, toJson: true)
+class Company {
+  @Column(sequence: true, primaryKey: true)
+  Int64? id;
+
+  String companyName;
+}
+
+@Convert(fromString: true, toString: true, fromJson: true, toJson: true)
+class PhoneNumber {
+  Int32 countryCode;
+  String nationalNumber;
+}

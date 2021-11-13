@@ -1,0 +1,120 @@
+import 'data_type.jo';
+import 'token.jo';
+import 'value.jo';
+import 'void.jo';
+
+default class annotation
+  @Convert(
+    fromMap: true, 
+    fromString: true, toString: true, 
+    fromBinary: true, toBinary: true,
+  );
+
+class Annotation {
+  0: String name;
+  1: Map<String, Value> parameters;
+}
+
+/// A module represents a single .jo file.
+class Module {
+  0: String filename;
+  1: Package package = new Package();
+  2: List<Module> imports = new [];
+  3: List<Class> classes = new [];
+  4: List<Union> unions = new [];
+  5: List<Enum> enums = new [];
+}
+
+class Package {
+  /// The parts of the package name.
+  ///
+  /// e.g. au.com.lim.type would be ['au', 'com', 'lim', 'type'].
+  1: List<String> packageParts = [];
+
+  2: List<Annotation> annotations = new [];
+}
+
+/// Base class for [Class]es, [Union]s and [Enum]s.
+@Abstract
+extendable class ObjectBase {
+  1: String name;
+  2: Token nameToken;
+  3: List<Annotation> annotations;
+  4: List<String>? documentationComments = [];
+  5: List<Field> fields = new [];
+}
+
+class Class extends ObjectBase {
+  1: ClassType? baseClass;
+
+  /// Whether the class has a dynamic factory.
+  ///
+  /// A class that is virtual will encode its type when serialized.
+  ///
+  /// Example:
+  ///   extendable class Base;
+  ///   class Derived extends Base;
+  ///
+  ///   class Test {
+  ///      Base b;           // Will encode type.
+  ///      Derived d;        // Will not encode type.
+  ///      List<Base> lb;    // Will encode type for each element.
+  ///      List<Derived> ld; // Will not encode type for each element.
+  ///   }
+  ///
+  /// isVirtual implies [isExtendable].
+  2: Bool isVirtual;
+
+  /// Whether the class can have child classes.
+  3: Bool isExtendable;
+
+  4: List<Method> methods = new [];
+}
+
+class Enum extends ObjectBase {
+  1: List<EnumValue> values = new [];
+}
+
+class Union extends ObjectBase {
+  /// Whether the union is inline (type-based union) or not (key based union).
+  1: Bool isInline;
+}
+
+class Field {
+  0: Int64? fieldId;
+  1: String name;
+  2: List<Annotation> annotations;
+  3: DataType type;
+  4: Value? defaultValue;
+  5: List<String>? documentationComments = [];
+}
+
+class EnumValue {
+  0: Int64 id;
+  1: String name;
+  2: List<Annotation> annotations;
+  3: List<String>? documentationComments = [];
+  4: EnumFieldValues fieldValues;
+}
+
+@Convert(fromMap: true, toString: true, toBinary: true, fromBinary: true)
+@Immutable
+@When
+union EnumFieldValues {
+  0: Void none;
+  1: List<Value> list;
+  2: Map<String, Value> map;
+}
+
+class Method {
+  0: String name;
+  1: List<Annotation> annotations;
+  2: DataType returnType;
+  3: List<MethodParameter> parameters;
+}
+
+class MethodParameter {
+  0: String name;
+  1: List<Annotation> annotations;
+  2: DataType type;
+}

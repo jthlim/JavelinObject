@@ -1,0 +1,35 @@
+
+default class annotations
+  @Comparable
+  @Convert(toString: true)
+  @CopyWith
+  @Immutable;
+
+class A {
+  Bool a1;
+  String? a2;
+  B b;
+}
+
+class B {
+  Int64 b1;
+  Double? b2;
+  C c;
+}
+
+class C {
+  Float c1;
+  D? d;
+}
+
+class D {
+  Bool? d1;
+}
+
+class Simple {
+  Bool b;
+  Int64? i;
+  Double d;
+  List<Int64> l;
+  Set<Int64>? s;
+}

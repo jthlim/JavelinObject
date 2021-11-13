@@ -1,0 +1,358 @@
+import '../value.jo';
+
+@Convert(fromMap: true, toString: true)
+@Immutable
+virtual class ParsedAnnotation {
+  BoolOrCondition? enabled = .enabled(true);
+}
+
+@Convert(toString: true)
+class UnknownAnnotation extends ParsedAnnotation {
+  String name;
+  Map<String, Value> parameters;
+}
+
+@Convert(fromObject: true, toObject: true) 
+@Immutable
+@When
+inline union BoolOrCondition {
+  Bool enabled;
+  List<String> includedRoles;
+  Condition condition;
+}
+
+@Convert(fromMap: true, validateFromMap: true, toString: true) 
+@Immutable
+class Condition {
+  List<String> includedRoles = [];
+  List<String> excludedRoles = [];
+}
+
+//----------------------------------------------------------------------------
+
+default class annotations
+  @Convert(fromMap: true, validateFromMap: true, toString: true) 
+  @Immutable;
+
+/// Controls whether a class can be directly instantiated or not.
+class Abstract extends ParsedAnnotation {}
+
+/// Annotation used for Unions to control what class name and field are 
+/// generated to represent the active type.
+class ActiveElement extends ParsedAnnotation {
+  String? className;
+  String? fieldName;
+}
+
+class Alias extends ParsedAnnotation {
+  String alias;
+}
+
+/// Controls whether an element is present or not.
+///
+/// @Available can be used on classes, enums, unions, fields and enum values.
+class Available extends ParsedAnnotation {
+  BoolOrCondition? available = .enabled(true);
+}
+
+/// Adds Builder capabilities to a class.
+///
+/// Adds ClassName.builder() method which returns _ClassNameBuilder class.
+class Buildable extends ParsedAnnotation {
+  Bool? includeFactory = true;
+  Bool? includeToBuilder = true;
+}
+
+class Column extends ParsedAnnotation {
+  String? name;
+  Bool? primaryKey = false;
+  Bool? sequence = false;
+  Bool? unique = false;
+}
+
+/// Adds hashCode and operator==.
+///
+/// If orderedOperators is `true`, then compareTo and ordered operators are
+/// created too.
+class ComparableClass extends ParsedAnnotation {
+  List<String>? fields;
+  Bool? orderedOperators = false;  
+}
+
+/// Adds hashCode and operator==.
+///
+/// If orderedOperators is `true`, then compareTo and ordered operators are
+/// created too.
+class ComparableUnion extends ParsedAnnotation {
+}
+
+class ConvertClass extends ParsedAnnotation {
+  /// Adds `static Type fromMap(Map map)` factory to the class.
+  @Alias(alias: 'fromMap')
+  Bool? includeFromMap = false;
+
+  /// Causes field names to be validated in fromMap() method.
+  Bool? validateFromMap = false;
+
+  /// Adds `Map<String, Objec?> toMap()` method to the class.
+  @Alias(alias: 'toMap')
+  Bool? includeToMap = false;
+
+  /// Adds `static Type fromJson(String json)` factory to the class.
+  @Alias(alias: 'fromJson')
+  Bool? includeFromJson = false;
+
+  /// Causes field names to be validated in fromJsonMap() method that is used
+  /// by fromJson().
+  Bool? validateFromJson = false;
+
+  /// Adds `String toJson({bool pretty = false})` method to the class.
+  @Alias(alias: 'toJson')
+  Bool? includeToJson = false;
+
+  /// The name used to identify the type when serializing json.
+  ///
+  /// Will fallback to typeName, or the class name.
+  String? jsonTypeName;
+
+  /// The key used to store the typeName in a JSON map.
+  ///
+  /// Defaults to '$t'.
+  String? jsonTypeKey;
+
+  /// The name used to identify the type when serializing.
+  ///
+  /// Defaults to the class name.
+  String? typeName;
+
+  /// The key used to store the typeName in a map.
+  ///
+  /// Defaults to '$t'.
+  String? typeKey;
+
+  /// Adds `static Type fromYaml(String yaml)` factory to the class.
+  ///
+  /// This will implicitly enable [includeFromMap].
+  @Alias(alias: 'fromYaml')
+  Bool? includeFromYaml = false;
+
+  /// Adds `factory Type.fromBytes(Uint8List bytes)` factory to the class.
+  @Alias(alias: 'fromBinary')
+  @Alias(alias: 'fromBytes')
+  Bool? includeFromBinary = false;
+
+  /// Adds `Uint8List toBytes()` method to the class.
+  @Alias(alias: 'toBinary')
+  @Alias(alias: 'toBytes')
+  Bool? includeToBinary = false;
+
+  /// The fieldId to use when serializing a derived class that has fields. 
+  ///
+  /// Defaults to 0 if not specified.
+  Uint32? derivedFieldId;
+
+  /// The typeId used when serializing this class.
+  ///
+  /// It must be specified if the class has a parent or is extendable and is 
+  /// not abstract.
+  Uint32? typeId;
+
+  /// The fieldId to use to store the typeId.
+  ///
+  /// Defaults to 1 if not specified.
+  Uint32? typeIdFieldId;
+
+  /// Adds `static Type fromString(String string)` factory to the class.
+  ///
+  /// This will implicitly enable [includeFromMap].
+  @Alias(alias: 'fromString')
+  @Alias(alias: 'fromText')
+  Bool? includeFromString = false;
+
+  /// Adds `String toString({bool pretty = true})` method to the class.
+  ///
+  /// This will implicitly enable [includeToMap].
+  @Alias(alias: 'toString')
+  @Alias(alias: 'toText')
+  Bool? includeToString = false;
+
+  /// Adds 'String toDartString()` method to the class.
+  @Alias(alias: 'toDartString')
+  Bool? includeToDartString = false;
+}
+
+class ConvertEnum extends ParsedAnnotation {
+  /// Adds `static Type fromJson(String json)` factory to the class.
+  @Alias(alias: 'fromJson')
+  Bool? includeFromJson = false;
+
+  /// Adds `String toJson({bool pretty = false})` method to the class.
+  @Alias(alias: 'toJson')
+  Bool? includeToJson = false;
+
+  /// Adds `static Type fromString(String string)` factory to the class.
+  ///
+  /// This will implicitly enable [includeFromMap].
+  @Alias(alias: 'fromString')
+  @Alias(alias: 'fromText')
+  Bool? includeFromString = false;
+
+  /// Adds `String toString({bool pretty = true})` method to the class.
+  ///
+  /// This will implicitly enable [includeToMap].
+  @Alias(alias: 'toString')
+  @Alias(alias: 'toText')
+  Bool? includeToString = false;
+
+  /// Adds `Type fromId(int id)` for enum classes.
+  @Alias(alias: 'fromId')
+  Bool? includeFromId = false;
+
+  /// Adds 'String toDartString()` method to the class.
+  @Alias(alias: 'toDartString')
+  Bool? includeToDartString = false;
+}
+
+class ConvertUnion extends ParsedAnnotation {
+  /// Adds `static Type fromMap(Map map)` factory to the class.
+  @Alias(alias: 'fromMap')
+  Bool? includeFromMap = false;
+
+  /// Causes field names to be validated in fromMap() method.
+  Bool? validateFromMap = false;
+
+  /// Adds `Map<String, Objec?> toMap()` method to the class.
+  @Alias(alias: 'toMap')
+  Bool? includeToMap = false;
+
+  /// Adds `static Type fromJson(String json)` factory to the class.
+  @Alias(alias: 'fromJson')
+  Bool? includeFromJson = false;
+
+  /// Causes field names to be validated in fromJsonMap() method that is used
+  /// by fromJson().
+  Bool? validateFromJson = false;
+
+  /// Adds `String toJson({bool pretty = false})` method to the class.
+  @Alias(alias: 'toJson')
+  Bool? includeToJson = false;
+
+  /// Adds `static Type fromYaml(String yaml)` factory to the class.
+  ///
+  /// This will implicitly enable [includeFromMap].
+  @Alias(alias: 'fromYaml')
+  Bool? includeFromYaml = false;
+
+  /// Adds `factory Type.fromBytes(Uint8List bytes)` factory to the class.
+  @Alias(alias: 'fromBinary')
+  @Alias(alias: 'fromBytes')
+  Bool? includeFromBinary = false;
+
+  /// Adds `Uint8List toBytes()` method to the class.
+  @Alias(alias: 'toBinary')
+  @Alias(alias: 'toBytes')
+  Bool? includeToBinary = false;
+
+  /// Adds `static Type fromString(String string)` factory to the class.
+  ///
+  /// This will implicitly enable [includeFromMap].
+  @Alias(alias: 'fromString')
+  @Alias(alias: 'fromText')
+  Bool? includeFromString = false;
+
+  /// Adds `String toString({bool pretty = true})` method to the class.
+  ///
+  /// This will implicitly enable [includeToMap].
+  @Alias(alias: 'toString')
+  @Alias(alias: 'toText')
+  Bool? includeToString = false;
+
+  /// Adds 'Type fromObject()` factory to the class.
+  @Alias(alias: 'fromObject')
+  Bool? includeFromObject = false;
+
+  /// Adds 'Object toObject()` method to the class.
+  @Alias(alias: 'toObject')
+  Bool? includeToObject = false;
+
+  /// Adds 'String toDartString()` method to the class.
+  @Alias(alias: 'toDartString')
+  Bool? includeToDartString = false;
+}
+
+
+class CopyWith extends ParsedAnnotation {}
+
+class Deprecated extends ParsedAnnotation {
+  String message;
+}
+
+/// Embeds the class or union's fields into the current class.
+///
+/// ```
+///   class A {
+///     @Embed
+///     B b; 
+///   }
+///
+///   class B {
+///     Int64 i;
+///     String s; 
+///   }
+/// ```
+///
+/// This will enable:
+///
+/// ```
+///   final a = A(...);
+///   a.i = 10;
+///   print(a.s);
+/// ```
+///
+/// By default, all fields are made available.
+///
+/// map can be used to 'rename' elements:
+///
+/// ```
+///   class A {
+///     @Embled(map: {'stringValue': 's'})
+///     B b;
+///   }
+/// ```
+class Embed extends ParsedAnnotation {
+  List<String>? fields;
+  Map<String, String>? map;
+}
+
+/// Provides a `static const values` list with all the enum values.
+class EnumValues extends ParsedAnnotation {}
+
+class Immutable extends ParsedAnnotation {}
+
+/// Specifies the strings to use for json field names and enumeration values.
+class JsonAlias extends ParsedAnnotation {
+  String alias;
+}
+
+class MergeWith extends ParsedAnnotation {}
+
+/// Used on classes and unions to indicate that a Placeholder object should be
+/// generated.
+class Placeholder extends ParsedAnnotation {
+  String placeholderName = 'placeholder';
+}
+
+/// Adds storage capabilities to the class.
+class Storable extends ParsedAnnotation {
+  Bool? mysql = false;
+  Bool? postgres = false;
+  Bool? redis = false;
+}
+
+class Table extends ParsedAnnotation {
+  String? name;
+  String? postgresSchema;
+}
+
+/// Provides a when() method inside Unions
+class When extends ParsedAnnotation {}

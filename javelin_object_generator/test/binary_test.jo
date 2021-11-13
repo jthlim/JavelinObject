@@ -1,0 +1,144 @@
+@Convert(fromId: true, fromString: true, toString: true)
+enum EnumValue {
+  0: a;
+  1: b;
+  2: c;
+  3: d;
+  4: e;
+}
+
+@Comparable
+@Convert(fromBinary: true, toBinary: true, toString: true, toJson: true)
+@Immutable
+class Binary {
+  0: Bool? b;
+  1: Int32? i;
+  2: Uint32? u;
+  3: Float? f;
+  4: Double? d;
+  5: Bytes? bytes;
+  6: String? string;
+  7: EnumValue? e;
+}
+
+@Comparable
+@Convert(fromBinary: true, toBinary: true, toString: true, toJson: true)
+class Person {
+  0: String name;
+  1: Uint32 age;
+}
+
+@Comparable
+@Convert(fromBinary: true, toBinary: true, toString: true, toJson: true)
+class ListTest {
+  0: List<Int32>? a;
+  1: List<List<Int32>>? b;
+  2: List<String>? c;
+  3: List<Set<Int32>>? d;
+  4: List<EnumValue>? e;
+  5: List<Person>? f;
+  6: List<Map<Int32, Int32>>? g;
+  7: List<Union>? h;
+}
+
+@Comparable
+@Convert(fromBinary: true, toBinary: true, toString: true, toJson: true)
+class MapTest {
+  0: Map<Int32, Int32>? a;
+  1: Map<Int32, Uint32>? b;
+  2: Map<Int32, String>? c;
+  3: Map<String, String>? d;
+  4: Map<Int32, Map<Int32, Int32>>? e;
+  5: Map<String, EnumValue>? f;
+}
+
+
+@Comparable
+@Convert(fromBinary: true, toBinary: true, toString: true, toJson: true)
+class BoolWrapper {
+  0: Bool b;
+}
+
+@Comparable
+@Convert(fromBinary: true, toBinary: true, toString: true, toJson: true)
+class BoolWrapTest {
+  0: BoolWrapper b;
+}
+
+@Comparable
+@Convert(
+  fromBinary: true, toBinary: true, 
+  toMap: true, 
+  toString: true, 
+  toJson: true, fromJson: true,
+)
+union Union {
+  0: Bool b;
+  1: Int32 i;
+  2: Uint32 u;
+  3: Float f;
+  4: Double d;
+  5: Bytes bytes;
+  6: String string;
+  7: EnumValue e;
+  8: Union un;
+}
+
+@Comparable
+@Convert(fromBinary: true, toBinary: true, toObject: true, toString: true)
+inline union InlineUnion {
+  0: Bool b;
+  1: Int32 i;
+  2: String string;
+}
+
+
+@Comparable
+@Convert(fromBinary: true, toBinary: true, toString: true)
+class UnionWrapper {
+  0: Union u;
+}
+
+@Comparable
+@Convert(fromBinary: true, toBinary: true, toString: true)
+class NullableUnionWrapper {
+  0: Union? u;
+}
+
+@Abstract
+@Comparable
+@Convert(
+  fromBinary: true, toBinary: true, 
+  fromString: true, toString: true, 
+  fromJson: true, toJson: true,
+  typeIdFieldId: 5, typeId: 0,
+)
+@Immutable
+virtual class BaseClass {
+  1: Int32 i;
+  2: String? s;
+  3: Uint32 u = 10;
+  4: Double? d = 20.0;
+}
+
+@Comparable
+@Convert(
+  fromBinary: true, toBinary: true, 
+  fromString: true, toString: true, 
+  fromJson: true, toJson: true,
+  typeId: 1,
+)
+@Immutable
+class InheritedClass extends BaseClass {
+  0: Bool b;
+  1: Float f;
+}
+
+
+@Comparable
+@Convert(fromBinary: true, toBinary: true, toString: true)
+@Immutable
+union UnionWithOptionals {
+  0: Int64? a;
+  1: String? b;
+}

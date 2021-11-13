@@ -1,0 +1,5 @@
+@Immutable
+@Convert(fromMap: true, validateFromMap: true, toString: true)
+class CompilerOptions {
+  List<String> roles = [];
+}

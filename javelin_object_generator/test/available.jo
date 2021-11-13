@@ -1,0 +1,37 @@
+
+@Available(available: ['server'])
+class TargetSpecificClass {
+  Int32 serverField;
+}
+
+@Available(available: ['client'])
+class TargetSpecificClass {
+  Int32 clientField;
+}
+
+class Common {
+  @Available(available: ['server'])
+  String serverField;
+
+  @Available(available: ['client'])
+  String clientField;
+}
+
+
+enum Enum {
+  @Available(available: ['server'])
+  case0 = a: 'hello', b: 'server';
+
+  @Available(available: ['client'])
+  case0 = a: 'hello', b: 3;
+
+  case1 = 'a', 'b', 2;
+
+  String a;
+
+  @Available(available: ['server'])
+  String b;
+
+  @Available(available: ['client'])
+  Int64 b;
+}

@@ -1,0 +1,43 @@
+@Convert(fromString: true, toString: true)
+enum CircleSize {
+  /// Small circle: 16dp.
+  small;
+
+  /// Medium circle: 24dp.
+  medium;
+
+  /// Large circle: 32dp.
+  large;
+}
+
+/// The size of a sheet of paper.
+enum PaperSize {
+  /// Standard A4 sized paper.
+  4: a4 = 210, 297;
+
+  /// Standard A5 sized paper.
+  5: a5 = width: 148, height: 210;
+
+  /// The width in millimeters of the paper.
+  Float width;
+
+  /// The height in millimeters of the paper.
+  Float height;
+}
+
+@Comparable
+@Immutable
+@Convert(
+  fromMap: true, toMap: true, 
+  fromJson: true, toJson: true, 
+  toString: true,
+)
+class Avatar {
+  CircleSize size = .small;
+  String captionText;
+}
+
+class User {
+  String email;
+  Avatar avatar = Avatar(captionText: 'Unknown user');
+}

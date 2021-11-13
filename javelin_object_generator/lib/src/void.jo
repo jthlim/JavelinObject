@@ -1,0 +1,7 @@
+@Convert(
+  fromMap: true, 
+  fromString: true, toString: true, 
+  fromBinary: true, toBinary: true,
+)
+@Immutable
+class Void {}

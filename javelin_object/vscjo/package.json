@@ -1,0 +1,25 @@
+{
+    "name": "jo",
+    "displayName": "Javelin Object",
+    "description": "Javelin Object Specification File",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.57.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "jo",
+            "aliases": ["Javelin Object Specification File", "jo"],
+            "extensions": [".jo"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "jo",
+            "scopeName": "source.jo",
+            "path": "./syntaxes/jo.tmLanguage.json"
+        }]
+    }
+}

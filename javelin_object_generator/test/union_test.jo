@@ -1,0 +1,56 @@
+@Comparable
+@Convert(fromBinary: true, toBinary: true, fromMap: true, toString: true, toJson: true)
+@Immutable
+class PhoneNumber {
+  0: Int32 countryCode;
+  1: String nationalNumber;
+}
+
+@Convert(fromBinary: true, toBinary: true, fromString: true, toString: true)
+@Immutable
+inline union InlineIdentity {
+  /// The identity is defined by an email address.
+  0: String emailAddress;
+
+  /// The identity is defined by a phone number.
+  ///
+  /// This number should be able to receive SMS.
+  1: PhoneNumber phoneNumber;
+}
+
+class DefaultInlineIdentityTest {
+  @Embed
+  0: InlineIdentity identity = .emailAddress('test@test.com');
+}
+
+@Convert(fromBinary: true, toBinary: true, fromString: true, toString: true)
+@Immutable
+union Identity {
+  /// The identity is defined by an email address.
+  0: String emailAddress;
+
+  /// The identity is defined by a phone number.
+  ///
+  /// This number should be able to receive SMS.
+  1: PhoneNumber phoneNumber;
+}
+
+class DefaultIdentityTest {
+  0: Identity identity = .emailAddress('test@test.com');
+}
+
+@Immutable
+class Null {}
+
+union Token {
+  0: Null classKeyword = Null();
+  1: String identifier;
+}
+
+@Comparable
+@Convert(fromString: true, toString: true)
+@Immutable
+union UnionWithOptionals {
+  0: Int64? a;
+  1: String? b;
+}

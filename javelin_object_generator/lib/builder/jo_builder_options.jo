@@ -1,0 +1,12 @@
+import '../jo/variant.jo';
+import '../src/compiler_options.jo';
+
+@Immutable
+@Convert(fromMap: true, validateFromMap: true, toString: true)
+class JoBuilderOptions {
+  Bool writeJoTokens = false;
+  Bool writeParse = false;
+
+  CompilerOptions options;
+}
+

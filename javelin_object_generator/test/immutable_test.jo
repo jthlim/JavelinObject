@@ -1,0 +1,6 @@
+@Immutable
+class Test {
+  List<Int32> intList;
+  Set<String> stringSet;
+  Map<String, String> stringMap;
+}

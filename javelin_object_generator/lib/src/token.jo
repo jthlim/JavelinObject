@@ -1,0 +1,53 @@
+import 'void.jo';
+
+@ActiveElement(className: 'TokenType', fieldName: 'type')
+@Comparable
+@Convert(
+  fromMap: true, 
+  fromString: true, toString: true, 
+  fromBinary: true, toBinary: true,
+)
+@Immutable
+union TokenData {
+  0: Void classKeyword;
+  1: Void unionKeyword;
+  2: Void enumKeyword;
+  3: Void extendsKeyword;
+  4: Void defaultKeyword;
+  5: Bool boolValue;
+  6: Int32 intValue;
+  7: Double doubleValue;
+  8: String stringValue;
+  9: String identifier;
+  10: Void colon;
+  11: Void semicolon;
+  12: Void comma;
+  13: Void equals;
+  14: Void at;
+  15: Void dot;
+  16: Void questionMark;
+  17: Void leftAngleBracket;
+  18: Void rightAngleBracket;
+  19: Void leftSquareBracket;
+  20: Void rightSquareBracket;
+  21: Void leftCurlyBrace;
+  22: Void rightCurlyBrace;
+  23: Void leftParenthesis;
+  24: Void rightParenthesis;
+  25: Void eof;
+}
+
+@Comparable
+@Convert(
+  fromMap: true, 
+  fromString: true, toString: true, 
+  fromBinary: true, toBinary: true,
+)
+@Immutable
+class Token {
+  @Embed
+  0: TokenData data;
+  
+  1: Uint32 line;
+  2: Uint32 column;
+}
